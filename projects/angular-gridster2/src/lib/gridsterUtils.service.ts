@@ -26,7 +26,7 @@ export class GridsterUtils {
                 func.apply(context, args);
             };
             clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
+            timeout = window.setTimeout(later, wait);
         };
     }
 
@@ -106,9 +106,9 @@ export class GridsterUtils {
                 return false;
             }
         }
-        // @ts-ignore
+
         return GridsterUtils.checkDragHandleClass(
-            target.parentNode,
+            target.parentNode as HTMLElement,
             current,
             dragHandleClass,
             ignoreContentClass,
@@ -123,15 +123,16 @@ export class GridsterUtils {
         if (!target || target === current) {
             return false;
         }
-        // @ts-ignore
-        if (
-            target.hasAttribute('class') &&
-            target.getAttribute('class').split(' ').indexOf(contentClass) > -1
-        ) {
+
+        const targetClass = target.getAttribute('class');
+        if (targetClass && targetClass.split(' ').indexOf(contentClass) > -1) {
             return true;
         } else {
-            // @ts-ignore
-            return GridsterUtils.checkContentClass(target.parentNode, current, contentClass);
+            return GridsterUtils.checkContentClass(
+                target.parentNode as HTMLElement,
+                current,
+                contentClass,
+            );
         }
     }
 

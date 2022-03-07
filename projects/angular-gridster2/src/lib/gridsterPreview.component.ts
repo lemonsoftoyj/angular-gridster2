@@ -20,11 +20,11 @@ import { GridsterRenderer } from './gridsterRenderer.service';
     encapsulation: ViewEncapsulation.None,
 })
 export class GridsterPreviewComponent implements OnInit, OnDestroy {
-    @Input() previ;
+    @Input()
+    previewStyle$: EventEmitter<GridsterItem | null>;
 
-    ewStyle$: EventEmitter<GridsterItem | null>;
-
-    @Input() gridRenderer: GridsterRenderer;
+    @Input()
+    gridRenderer: GridsterRenderer;
 
     private el: HTMLElement;
 
