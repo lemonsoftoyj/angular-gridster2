@@ -1,26 +1,24 @@
 name: Deploy Demo
 
-on: [ push ]
+on: [push]
 
 jobs:
-  build:
+    build:
+        runs-on: ubuntu-latest
 
-    runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [16.x]
 
-    strategy:
-      matrix:
-        node-version: [ 16.x ]
-
-    steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: npm install, build, and deploy
-        run: |
-          npm ci --legacy-peer-deps
-          npm run build-npm
-          # npm run deploy
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        steps:
+            - uses: actions/checkout@v1
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node-version }}
+            - name: npm install, build, and deploy
+              run: |
+                  npm ci --legacy-peer-deps
+                  npm run build-npm
+              env:
+                  GH_TOKEN: ${{ secrets.GH_TOKEN }}
